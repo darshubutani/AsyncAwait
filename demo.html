@@ -1,0 +1,17 @@
+<script>
+const getJSON = function (url, errorMsg = 'Something went wrong') {
+  return fetch(url).then(response => {
+    if (!response.ok) throw new Error(`${errorMsg} (${response.status})`);
+    return response.json();
+  });
+};
+
+(async function () {
+  const res = await Promise.race([ 
+     getJSON(`https://restcountries.com/v3.1/name/india`),
+     getJSON(`https://restcountries.com/v3.1/name/canada`),
+     getJSON(`https://restcountries.com/v3.1/name/nepal`),
+  ]);
+  console.log(res[0]);
+})();
+</script>
